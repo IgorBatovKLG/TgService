@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class tgChannelModel {
-
+public class TgChannelModel {
     String url;
     int category;
     int countRecord;
