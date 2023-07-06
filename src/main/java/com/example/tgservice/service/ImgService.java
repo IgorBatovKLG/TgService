@@ -13,23 +13,44 @@ import java.util.List;
 public class ImgService {
 
     private final TgRepository tgRepository;
+    private final DownloadImg downloadImg;
 
-    public ImgService(TgRepository tgRepository) {
+    public ImgService(TgRepository tgRepository, DownloadImg downloadImg) {
         this.tgRepository = tgRepository;
+        this.downloadImg = downloadImg;
     }
 
     public List<Integer> getListChannelByCategory(int idCategory){
-        return tgRepository.getListChannelByCategory(idCategory);
+        return tgRepository.getListChannelIdByCategory(idCategory);
     }
 
-    public void addUrlImgTgToBd(List<Integer> tgChannel){
+    public void addUrlImgTgToBd(List<Integer> tgChannel, int idCategory){
         for (Integer integer : tgChannel) {
-            //запрос последнего поста в тг
-
-            //загружаем фором ссылки на картинки до экзепшена
-
-            //отправляем картинки в бд
+            int countRecord = tgRepository.getCountRecord(integer);
+            boolean isAdd = true;
+            int countfalse = 0;
+            String channelUrlById = tgRepository.getChannelUrlById(integer);
+            while (isAdd){
+                try {
+                    String urlImgTelegram = getUrlImgTelegram(channelUrlById, countRecord);
+                    tgRepository.updateCountRecord(integer, countRecord++);
+                    downloadImg.downloadImgByUrl(urlImgTelegram);
+                    tgRepository.addNameImgTgToBd("Image"+(tgRepository.getCountImg()+1)+".jpg", idCategory);
+                    countRecord++;
+                }catch (Exception e){
+                    System.out.println("Ошибка " + countRecord);
+                    countRecord++;
+                    if (countfalse>50){
+                        isAdd = false;
+                    }
+                    countfalse++;
+                }
+            }
         }
+    }
+
+    public void addUrlImgTgToBd(String name, int category){
+        tgRepository.addNameImgTgToBd(name, category);
     }
 
 
