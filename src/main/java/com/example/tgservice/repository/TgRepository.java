@@ -10,14 +10,14 @@ public class TgRepository {
 
     public static Connection connection;
 
-    static {
-        try {
-            connection = DriverManager.getConnection("jdbc:sqlite:E:/JAVA/db/tgBase.db");
-        } catch (SQLException e) {
-            System.out.println("Проблемы с подключением к базе данных");
-            e.printStackTrace();
-        }
-    }
+//    static {
+//        try {
+//            connection = DriverManager.getConnection("jdbc:sqlite:E:/JAVA/db/tgBase.db");
+//        } catch (SQLException e) {
+//            System.out.println("Проблемы с подключением к базе данных");
+//            e.printStackTrace();
+//        }
+//    }
 
     public List<Integer> getListChannelIdByCategory(int idCategory) {
         List<Integer> result = new ArrayList<>();

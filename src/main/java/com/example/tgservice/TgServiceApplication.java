@@ -14,9 +14,7 @@ public class TgServiceApplication {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext run = SpringApplication.run(TgServiceApplication.class, args);
-        ImgService bean = run.getBean(ImgService.class);
-        List<Integer> listChannelByCategory = bean.getListChannelByCategory(1);
-        bean.addUrlImgTgToBd(listChannelByCategory, 1);
+
     }
 
 }
