@@ -10,14 +10,14 @@ public class TgRepository {
 
     public static Connection connection;
 
-//    static {
-//        try {
-//            connection = DriverManager.getConnection("jdbc:sqlite:E:/JAVA/db/tgBase.db");
-//        } catch (SQLException e) {
-//            System.out.println("Проблемы с подключением к базе данных");
-//            e.printStackTrace();
-//        }
-//    }
+    static {
+        try {
+            connection = DriverManager.getConnection("jdbc:sqlite:E:/JAVA/db/tgBase.db");
+        } catch (SQLException e) {
+            System.out.println("Проблемы с подключением к базе данных");
+            e.printStackTrace();
+        }
+    }
 
     public List<Integer> getListChannelIdByCategory(int idCategory) {
         List<Integer> result = new ArrayList<>();
@@ -81,9 +81,10 @@ public class TgRepository {
 
 
     public void addNameImgTgToBd(String name, int category) {
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO ImgName VALUES (?, ?, ?)")) {
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO ImgName VALUES (?, ?, ?, ?)")) {
             statement.setString(2, name);
             statement.setInt(3, category);
+            statement.setInt(4, 0);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -105,6 +106,33 @@ public class TgRepository {
             return count;
         }
         return count;
+    }
+
+    public List<String> getImgNames(int category, int limit){
+        List<String> result = new ArrayList<>();
+
+        try (PreparedStatement statement = connection.prepareStatement("SELECT id from ImgName where category = '"+category+"' and off = '0'  ORDER BY ID DESC LIMIT " + limit)) {
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                result.add(resultSet.getString("id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return result;
+        }
+        return result;
+    }
+
+    public void updateOffImg(int id){
+        try (PreparedStatement statement = connection.prepareStatement("UPDATE ImgName SET off = ? WHERE id = ?")) {
+            statement.setInt(1, 1);
+            statement.setInt(2, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
 

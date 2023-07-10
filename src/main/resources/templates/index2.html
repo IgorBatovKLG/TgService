@@ -8,9 +8,10 @@
     <title>Document</title>
 </head>
 <body>
-<tr  th:each="s:${list}">
-    <p><img th:text="${s +'.jpg'}"></p>
-    <p><img th:src="${'http://localhost:81/'+s+'.jpg'}" width="250" height="250"></p>
+<tr th:each="s:${list}">
+    <p th:text="${s}"></p>
+    <a th:href="${'http://localhost:1998/deleteImg?id=' + s} " target="_blank"><button>Удалить</button></a>
+    <p><img th:src="${'http://localhost:81/Image'+s + '.jpg'}" width="250" height="250"></p>
 </tr>
 </body>
 </html>

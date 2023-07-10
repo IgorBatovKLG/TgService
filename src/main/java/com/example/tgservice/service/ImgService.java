@@ -26,7 +26,7 @@ public class ImgService {
 
     public void addUrlImgTgToBd(List<Integer> tgChannel, int idCategory){
         for (Integer integer : tgChannel) {
-            int countRecord = tgRepository.getCountRecord(integer);
+            int countRecord = tgRepository.getCountRecord(integer)+1;
             boolean isAdd = true;
             int countfalse = 0;
             String channelUrlById = tgRepository.getChannelUrlById(integer);
@@ -40,17 +40,13 @@ public class ImgService {
                 }catch (Exception e){
                     System.out.println("Ошибка " + countRecord);
                     countRecord++;
-                    if (countfalse>50){
+                    if (countfalse>500){
                         isAdd = false;
                     }
                     countfalse++;
                 }
             }
         }
-    }
-
-    public void addUrlImgTgToBd(String name, int category){
-        tgRepository.addNameImgTgToBd(name, category);
     }
 
 
@@ -70,4 +66,6 @@ public class ImgService {
         urlImg = urlImg.replace("')", "");
         return urlImg;
     }
+
+
 }
