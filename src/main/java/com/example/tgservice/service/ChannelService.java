@@ -23,4 +23,18 @@ public class ChannelService {
         tgRepository.updateOffImg(Integer.parseInt(list.get(0)));
 
     }
+
+    public void whileChannelService(){
+        while (true){
+            /*
+            1.сервис который загружает картинки
+            2.сервис добавляет записи на канал
+                2.1 загружает список каналов по категориям
+                2.2 выбирает канал
+                2.3 подгружает картинку под канал
+                2.4 отправляет картинку на канал
+                2.5 зануляем картинку
+             */
+        }
+    }
 }
